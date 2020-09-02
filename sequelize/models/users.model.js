@@ -27,19 +27,19 @@ module.exports = (sequelize) =>{
             }
         }]
 })
-users.beforeSave(async (user,options)=>{
+users.beforeSave(async (user,options)=>{ // ma hoa pass moi khi save
     if(user.isModified('password')){
         user.password= await bcrypt.hash(user.password,8)
     }
 })
-users.generateAuthToken = async function(){
+users.generateAuthToken = async function(){// tao token dua tren id cua user
     const user=this
     const token= jwt.sign({id: user.id},process.env.JWT_KEY)
     user.tokens= user.tokens.concat({token})
     await user.save()
     return token
 }
-users.findByCredentials = async(email, password)=>{
+users.findByCredentials = async(email, password)=>{ // tim user dung
     const user= await users.findOne({where: {email: email}}).then(function(user){})
     if(!user){
         throw new Error({error: 'invalid login credential'})

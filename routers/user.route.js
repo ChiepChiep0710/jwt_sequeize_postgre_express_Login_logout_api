@@ -3,9 +3,9 @@ const express= require('express')
 const { models } = require('../sequelize');
 const auth = require('../middleware/auth')
 const router= express.Router()
-router.post('/users',async(req,res)=>{
+router.post('/users',async(req,res)=>{ // dang ky cho user
     try{
-        const user= new models.user(req.body)
+        const user= new models.users(req.body)
          await user.save()
         const token = await user.generateAuthToken()
         res.status(201).send({user, token})
@@ -16,7 +16,7 @@ router.post('/users',async(req,res)=>{
 router.post('/users/login', async(req, res)=>{
     try{
         const {email, password}= req.body
-        const user= await models.user.findByCredentials(email, password)
+        const user= await models.users.findByCredentials(email, password)
         if (!user){
             return res.sendstatus(401).send({error: 'login failed! Check authentication credentials'})
         }
@@ -26,7 +26,7 @@ router.post('/users/login', async(req, res)=>{
         res.status(400).send(error)
     }
 })
-router.get('/users/me', auth, async(req, res) => {
+router.get('/users/me', auth, async(req, res) => { //lay du lieu user hien tai
     res.send(req.user)
 })
 router.post('/users/me/logout', auth, async (req, res) => {
