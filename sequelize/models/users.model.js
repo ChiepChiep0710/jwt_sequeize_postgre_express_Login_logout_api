@@ -28,7 +28,7 @@ module.exports = (sequelize) =>{
         }]
   
 })
-users.beforeSave(async (user,options)=>{ // ma hoa pass moi khi save
+users.beforeCreate(async (user,options)=>{ // ma hoa pass moi khi save
     if(user.isModified('password')){
         user.password= await bcrypt.hash(user.password,8)
     }
