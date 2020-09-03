@@ -16,8 +16,9 @@ async function assertDatabaseConnectionOk() {
 }
 const PORT = process.env.PORT || 3000;
 const app=express();
-app.use(express.json())
-app.use(userRoutes)
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/',userRoutes)
 
 async function init() {
 	await assertDatabaseConnectionOk();

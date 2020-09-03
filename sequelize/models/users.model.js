@@ -29,9 +29,7 @@ module.exports = (sequelize) =>{
   
 })
 users.beforeCreate(async (user,options)=>{ // ma hoa pass moi khi save
-    if(user.isModified('password')){
         user.password= await bcrypt.hash(user.password,8)
-    }
 })
 users.generateAuthToken = async function(){// tao token dua tren id cua user
     const user=this
