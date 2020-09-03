@@ -26,6 +26,7 @@ module.exports = (sequelize) =>{
                 required: true
             }
         }]
+  
 })
 users.beforeSave(async (user,options)=>{ // ma hoa pass moi khi save
     if(user.isModified('password')){
@@ -50,4 +51,5 @@ users.findByCredentials = async(email, password)=>{ // tim user dung
     }
     return user
  }
+ return users
 }
