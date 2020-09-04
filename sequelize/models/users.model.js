@@ -20,26 +20,32 @@ module.exports = (sequelize) =>{
             required: true,
             minLength: 7,
         },
-        tokens: [{
-            token:{
-                type:DataTypes.STRING,
-                required: true
-            }
-        }]
+        token:{
+            type: DataTypes.STRING
+        }
   
-})
-users.beforeCreate(async (user,options)=>{ // ma hoa pass moi khi save
-        user.password= await bcrypt.hash(user.password,8)
-})
-users.generateAuthToken = async function(){// tao token dua tren id cua user
+},
+    {
+        hooks:{
+                beforeCreate: ( async (user,options)=>{
+                    user.password =await bcrypt.hash(user.password, 8) 
+                })
+        }
+    }
+)
+/*users.beforeCreate(async (user, options) => {
+    user.password = bcrypt.hash(user.password, 8)
+});*/
+users.prototype.generateAuthToken = async function(){// tao token dua tren id cua user
     const user=this
     const token= jwt.sign({id: user.id},process.env.JWT_KEY)
-    user.tokens= user.tokens.concat({token})
+    user.token= token
     await user.save()
     return token
 }
 users.findByCredentials = async(email, password)=>{ // tim user dung
-    const user= await users.findOne({where: {email: email}}).then(function(user){})
+    const user= await users.findOne({where: {email: email}})
+    console.log(user)
     if(!user){
         throw new Error({error: 'invalid login credential'})
     }

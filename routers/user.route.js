@@ -5,12 +5,10 @@ const auth = require('../middleware/auth')
 const router= express.Router()
 router.post('/users',async(req,res)=>{ // dang ky cho user
     try{
-        
-        const user= models.users.create(req.body)
-
-        //console.log(user)
-        const token = await user.generateAuthToken()
-        res.status(201).send({user, token})
+       
+        const user=await models.users.create(req.body)
+      //  console.log(req.body)
+        res.status(201).send({user})
     } catch (error){
         res.status(400).send(error)
     }
@@ -19,7 +17,10 @@ router.post('/users/login', async(req, res)=>{
     try{
         const {email, password}= req.body
         const user= await models.users.findByCredentials(email, password)
+        console.log('err')
+        
         if (!user){
+            
             return res.sendstatus(401).send({error: 'login failed! Check authentication credentials'})
         }
         const token = await user.generateAuthToken()
@@ -33,9 +34,7 @@ router.get('/users/me', auth, async(req, res) => { //lay du lieu user hien tai
 })
 router.post('/users/me/logout', auth, async (req, res) => {
     try {
-        req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token != req.token
-        })
+        req.user.token="",
         await req.user.save()
         res.send()
     } catch (error) {

@@ -6,5 +6,9 @@ const modelDefiners=[
 for (const modelDefiner of modelDefiners) {
 	modelDefiner(sequelize);
 }
+sequelize.sync({ force: true })
+  .then(() => {
+    console.log(`Database & tables created!`)
+  })
 
 module.exports= sequelize;
