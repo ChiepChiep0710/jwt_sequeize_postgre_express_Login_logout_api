@@ -1,8 +1,8 @@
 require('dotenv').config();
-const express=require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 const sequelize = require('./sequelize');
-const userRoutes= require('./routers/user.route')
+const userRoutes = require('./routers/user.route')
 async function assertDatabaseConnectionOk() {
 	console.log(`Checking database connection...`);
 	try {
@@ -15,10 +15,10 @@ async function assertDatabaseConnectionOk() {
 	}
 }
 const PORT = process.env.PORT || 3000;
-const app=express();
+const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/',userRoutes)
+app.use('/', userRoutes)
 
 async function init() {
 	await assertDatabaseConnectionOk();
