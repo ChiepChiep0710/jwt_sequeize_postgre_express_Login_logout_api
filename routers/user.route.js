@@ -17,7 +17,6 @@ router.post('/users/login', async(req, res)=>{
     try{
         const {email, password}= req.body
         const user= await models.users.findByCredentials(email, password)
-        console.log('err')
         
         if (!user){
             

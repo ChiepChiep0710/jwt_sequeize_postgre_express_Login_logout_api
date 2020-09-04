@@ -43,9 +43,8 @@ users.prototype.generateAuthToken = async function(){// tao token dua tren id cu
     await user.save()
     return token
 }
-users.findByCredentials = async(email, password)=>{ // tim user dung
+users.findByCredentials = async function(email, password){ // tim user dung
     const user= await users.findOne({where: {email: email}})
-    console.log(user)
     if(!user){
         throw new Error({error: 'invalid login credential'})
     }
