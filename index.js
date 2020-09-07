@@ -25,7 +25,7 @@ async function init() {
 
 	console.log(`Starting Sequelize + Express example on port ${PORT}...`);
 
-	app.listen(PORT, () => {
+	app.listen(PORT, function () {
 		console.log(`Express server started on port ${PORT}. Try some routes, such as '/api/users'.`);
 	});
 }

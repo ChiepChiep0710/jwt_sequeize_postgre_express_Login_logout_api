@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize')
 const bcrypt = require('bcryptjs');
 const validator = require('validator')
 const jwt = require('jsonwebtoken');
-module.exports = (sequelize) => {
+module.exports = function (sequelize) {
     var users = sequelize.define('users', {
         email: {
             type: DataTypes.STRING,
@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
     },
         {
             hooks: {
-                beforeCreate: (async (user, options) => {
+                beforeCreate: (async function (user, options) {
                     user.password = await bcrypt.hash(user.password, 8)
                 })
             }
