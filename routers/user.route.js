@@ -3,7 +3,7 @@ const express = require('express')
 const { models } = require('../sequelize');
 const auth = require('../middleware/auth')
 const router = express.Router()
-router.post('/users', async function (req, res) { // dang ky cho user
+router.post('/users', async (req, res) => { // dang ky cho user
   try {
 
     const user = await models.users.create(req.body)
@@ -28,10 +28,10 @@ router.post('/users/login', async function (req, res) {
     res.status(400).send(error)
   }
 })
-router.get('/users/me', auth, async function (req, res) { //lay du lieu user hien tai
+router.get('/users/me', auth, async (req, res) => { //lay du lieu user hien tai
   res.send(req.user)
 })
-router.post('/users/me/logout', auth, async function (req, res) {
+router.post('/users/me/logout', auth, async (req, res) => {
   try {
     req.user.token = "",
       await req.user.save()

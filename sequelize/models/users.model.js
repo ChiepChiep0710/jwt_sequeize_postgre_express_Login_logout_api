@@ -9,7 +9,7 @@ module.exports = function (sequelize) {
       type: DataTypes.STRING,
       required: true,
       unique: true,
-      validate: function (value) {
+      validate: value => {
         if (!validator.isEmail(value)) {
           throw new Error({ error: 'invalid Email' })
         }
@@ -27,7 +27,7 @@ module.exports = function (sequelize) {
   },
     {
       hooks: {
-        beforeCreate: (async function (user, options) {
+        beforeCreate: (async (user, options) => {
           user.password = await bcrypt.hash(user.password, 8)
         })
       }
