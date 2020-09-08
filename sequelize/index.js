@@ -7,7 +7,7 @@ for (const modelDefiner of modelDefiners) {
   modelDefiner(sequelize);
 }
 sequelize.sync({ force: false })
-  .then(() => {
+  .then(function () {
     console.log(`Database & tables created!`)
   })
 

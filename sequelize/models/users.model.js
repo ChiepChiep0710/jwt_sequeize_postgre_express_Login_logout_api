@@ -9,7 +9,7 @@ module.exports = function (sequelize) {
       type: DataTypes.STRING,
       required: true,
       unique: true,
-      validate: value => {
+      validate: function (value) {
         if (!validator.isEmail(value)) {
           throw new Error({ error: 'invalid Email' })
         }
@@ -33,9 +33,7 @@ module.exports = function (sequelize) {
       }
     }
   )
-  /*users.beforeCreate(async (user, options) => {
-      user.password = bcrypt.hash(user.password, 8)
-  });*/
+
   users.prototype.generateAuthToken = async function () {// tao token dua tren id cua user
     const user = this
     const token = jwt.sign({ id: user.id }, process.env.JWT_KEY)
