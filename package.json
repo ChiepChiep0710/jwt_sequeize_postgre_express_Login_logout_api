@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "npm run prod",
+    "transpile": "babel ./server --out-dir dist-server",
+    "server": "nodemon ./server/index.js",
+    "clean": "rimraf dist-server",
+    "prod": "NODE_ENV=production npm-run-all build server",
+    "dev": "NODE_ENV=development npm-run-all build server",
+    "build": "npm-run-all clean transpile",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,9 +22,11 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "npm-run-all": "^4.1.5",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
     "qg": "0.0.0",
+    "rimraf": "^3.0.2",
     "sequelize": "^6.3.4",
     "validator": "^13.1.1"
   },
