@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const sequelize = require('./sequelize');
-const userRoutes = require('./routers/user.route')
+const sequelize = require('./Database');
+const userRoutes = require('./users/user.route')
 async function assertDatabaseConnectionOk() {
   console.log(`Checking database connection...`);
   try {
@@ -30,4 +30,6 @@ async function init() {
   });
 }
 
+
 init();
+module.exports = app;

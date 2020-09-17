@@ -41,16 +41,22 @@ module.exports = function (sequelize) {
     await user.save()
     return token
   }
-  users.findByCredentials = async function (email, password) { // tim user dung
+  users.findByCredentials = async function (email, password) { 
+    // tim user dung
+    try{
     const user = await users.findOne({ where: { email: email } })
+
     if (!user) {
-      throw new Error({ error: 'invalid login credential' })
+      throw new Error( 'user is not exist' )
     }
     const isPasswordMatch = await bcrypt.compare(password, user.password)
     if (!isPasswordMatch) {
-      throw new Error({ error: 'invalid login credential' })
+      throw new Error( 'password is wrong' )
     }
-    return user
+    return {user: user }
+    }catch(error){
+        return {error: error}
+    }
   }
   return users
 }

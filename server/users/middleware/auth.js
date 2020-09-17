@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-const { models } = require('../sequelize');
+const { models } = require('../../Database');
 const auth = async (req, res, next) =>{
   const token = req.header('Authorization').replace('Bearer ', '')
   try{
@@ -16,8 +16,8 @@ const auth = async (req, res, next) =>{
     req.token = token
     next()
   } catch (error) {
-    res.status(401).send({ error: 'Not authorized to access this resource' })
-    }
+    res.status(401).send({ error: error.message })
+  }
 }
 
 

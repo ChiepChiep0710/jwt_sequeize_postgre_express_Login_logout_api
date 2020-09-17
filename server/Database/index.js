@@ -1,7 +1,10 @@
 const { Sequelize } = require('sequelize')
-const sequelize = new Sequelize(process.env.POSTGRES_URL)
+const envConfig= require('./config')
+const env = process.env.NODE_ENV || 'development';
+const config = envConfig[env];
+const sequelize = new Sequelize(config.url, config)
 const modelDefiners = [
-  require('./models/users.model')
+  require('../users/users.model')
 ]
 for (const modelDefiner of modelDefiners) {
   modelDefiner(sequelize);
